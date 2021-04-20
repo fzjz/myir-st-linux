@@ -253,7 +253,7 @@ static irqreturn_t edt_ft5x06_ts_isr(int irq, void *dev_id)
 		if (input_mt_report_slot_state(tsdata->input, MT_TOOL_FINGER,
 					       type != TOUCH_EVENT_UP))
 			touchscreen_report_pos(tsdata->input, &tsdata->prop,
-					       x, y, true);
+					       y, x, true);
 	}
 
 	input_mt_report_pointer_emulation(tsdata->input, true);
