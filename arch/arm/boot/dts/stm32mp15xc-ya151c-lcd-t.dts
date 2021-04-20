@@ -7,21 +7,21 @@
 
 /dts-v1/;
 
-#include "stm32mp157c-ya157c-hdmi-v1.dts"
+#include "stm32mp15xc-ya151c-t.dts"
 
 / {
-    	model = "MYIR YA157C v1 www.myir-tech.com";
-    	compatible = "myir,stm32mp157c-ya157c-v1", "st,stm32mp157";
-
+    	 model = "MYIR YA15XC-T www.myir-tech.com";
+   	 compatible = "myir,stm32mp15xc-ya151c-t", "st,stm32mp157";
 	/*LCD Panel*/
 	panel {
 		compatible = "myir,070tft";
-        	interrupts = <11 IRQ_TYPE_EDGE_FALLING>;
-        	interrupt-parent = <&gpioe>;
         	pinctrl-names = "default", "sleep";
         	pinctrl-0 = <&ltdc_pins_a>;
         	pinctrl-1 = <&ltdc_pins_sleep_a>;
-        	reset-gpios = <&gpioe 12 GPIO_ACTIVE_LOW>;
+		enable-gpios = <&gpiog 8 GPIO_ACTIVE_HIGH>;
+        	reset-gpios = <&gpioi 3 GPIO_ACTIVE_HIGH>;
+		//interrupts = <3 IRQ_TYPE_EDGE_FALLING>;
+                //interrupt-parent = <&gpioi>;
 
 		//backlight = <&panel_backlight>;
        	 	status = "okay";
@@ -34,26 +34,9 @@
 		};
 	};
 	
-	sound {
-        	status = "disable";
-    	};
-	
-
+	 
 };
 
-/*HDMI*/
-&i2c2 {
-	hdmi-transmitter@39 {
-		compatible = "sil,sii9022";
-		reg = <0x39>;
-		status = "disable";
-	};
-};
-
-&i2s2 {
-	status = "disable";
-
-};
 
 /*test LCD*/
 &ltdc {

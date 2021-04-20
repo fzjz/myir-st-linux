@@ -19,10 +19,9 @@
 	aliases {
 		ethernet0 = &ethernet0;
 		serial0 = &uart4;
-		//serial2 = &uart8;//rs232
+		serial2 = &uart8;//rs232
 		serial3 = &uart5;//rs485
-		//serial4 = &uart7;//bt
-		serial4 = &usart1;//bt
+		serial4 = &uart7;//bt
 	};
 
 	chosen {
@@ -135,6 +134,10 @@
 				regulator-over-current-protection;
 			};
 
+			 bst_out: boost {
+				regulator-name = "bst_out";
+				//interrupts = <IT_OCP_BOOST 0>;
+			 };
 
 		};
 

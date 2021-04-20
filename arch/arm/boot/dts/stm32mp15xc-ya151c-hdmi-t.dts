@@ -7,11 +7,11 @@
 
 /dts-v1/;
 
-#include "stm32mp157c-ya157c-v2.dts"
+#include "stm32mp15xc-ya151c-t.dts"
 
 / {
-    model = "MYIR YA157C v2 www.myir-tech.com";
-    compatible = "myir,stm32mp157c-ya157c-v2", "st,stm32mp157";
+    model = "MYIR YA15XC-HDMI-T www.myir-tech.com";
+    compatible = "myir,stm32mp15xc-ya151c-t", "st,stm32mp157";
 /*
 	sound {
         compatible = "audio-graph-card";
@@ -30,9 +30,9 @@
 	hdmi-transmitter@39 {
 		compatible = "sil,sii9022";
 		reg = <0x39>;
-		reset-gpios = <&gpioc 7 GPIO_ACTIVE_LOW>;
-		interrupts = <10 IRQ_TYPE_EDGE_FALLING>;
-		interrupt-parent = <&gpioa>;
+		//reset-gpios = <&gpiob 8 GPIO_ACTIVE_LOW>;
+		interrupts = <3 IRQ_TYPE_EDGE_FALLING>;
+		interrupt-parent = <&gpioi>;
 		//#sound-dai-cells = <0>;
 		status = "okay";
 

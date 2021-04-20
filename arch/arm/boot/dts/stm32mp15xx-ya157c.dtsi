@@ -29,19 +29,19 @@
 
 		vdev0vring0: vdev0vring0@10040000 {
 			compatible = "shared-dma-pool";
-			reg = <0x10040000 0x1000>;
+			reg = <0x10040000 0x2000>;
 			no-map;
 		};
 
 		vdev0vring1: vdev0vring1@10041000 {
 			compatible = "shared-dma-pool";
-			reg = <0x10041000 0x1000>;
+			reg = <0x10042000 0x2000>;
 			no-map;
 		};
 
 		vdev0buffer: vdev0buffer@10042000 {
 			compatible = "shared-dma-pool";
-			reg = <0x10042000 0x4000>;
+			reg = <0x10044000 0x4000>;
 			no-map;
 		};
 
@@ -90,18 +90,17 @@
 
 	wifi_pwrseq: wifi-pwrseq {
 		compatible = "mmc-pwrseq-simple";
-	//	reset-gpios = <&gpiof 3 GPIO_ACTIVE_LOW>;
-		reset-gpios = <&gpioz 0 GPIO_ACTIVE_LOW>;
+		reset-gpios = <&gpiof 3 GPIO_ACTIVE_LOW>;
 	};
 
-/*	
+	
 	panel_backlight: panel-backlight {
 		compatible = "gpio-backlight";
 		gpios = <&gpiob 8 GPIO_ACTIVE_HIGH>;
 		default-on;	
 		status = "okay";
 	};
-*/	
+
 	/*
 	panel_backlight: panel-backlight {
 		compatible = "pwm-backlight";
@@ -190,12 +189,23 @@
 	status = "okay";
 };
 
+/*
 &dma1 {
 	sram = <&dma_pool>;
 };
 
 &dma2 {
 	sram = <&dma_pool>;
+};
+*/
+&m4_dma1 {
+	status = "okay";
+
+};
+
+&m4_dma2 {
+        status = "okay";
+
 };
 
 &dts {
@@ -243,8 +253,8 @@
 	pinctrl-names = "default", "sleep";
         pinctrl-0 = <&i2c2_pins_a>;
         pinctrl-1 = <&i2c2_pins_sleep_a>;
-       	i2c-scl-rising-time-ns = <185>;
-        i2c-scl-falling-time-ns = <20>;
+        i2c-scl-rising-time-ns = <100>;
+        i2c-scl-falling-time-ns = <7>;
         status = "okay";
         /delete-property/dmas;
         /delete-property/dma-names;
@@ -254,19 +264,18 @@
               compatible ="edt,edt-ft5x06";
               reg = <0x38>;
 
-              interrupts = <1 IRQ_TYPE_EDGE_FALLING>;
-              interrupt-parent = <&gpioe>;
+              interrupts = <8  IRQ_TYPE_EDGE_FALLING>;
+              interrupt-parent = <&gpiog>;
               interrupt-controller;
-             // touchscreen-size-x = <800>;
-             // touchscreen-size-y = <480>;
+              touchscreen-size-x = <800>;
+              touchscreen-size-y = <480>;
 
               reset-gpios = <&gpiog 2 GPIO_ACTIVE_LOW>;
               status = "okay";
       };
 	
 };
-// close --------------------------------because bluetooth-------
-/*
+
 &i2c4 {
 	pinctrl-names = "default", "sleep";
 	pinctrl-0 = <&i2c4_pins_a>;
@@ -274,7 +283,8 @@
 	i2c-scl-rising-time-ns = <185>;
 	i2c-scl-falling-time-ns = <20>;
 	clock-frequency = <400000>;
-	status = "disabled";
+	status = "okay";
+	/* spare dmas for other usage */
 	/delete-property/dmas;
 	/delete-property/dma-names;
 
@@ -302,7 +312,7 @@
 		};
 	};
 };
-*/
+
 
 &ipcc {
 	status = "okay";
@@ -318,7 +328,7 @@
 &dsi {
 	#address-cells = <1>;
 	#size-cells = <0>;
-	status = "disabled";
+	status = "okay";
 
 };
 
@@ -448,12 +458,12 @@
 };
 
 /*rs232*/
-// &uart8 {
-//	pinctrl-names = "default", "sleep";
-//	pinctrl-0 = <&uart8_pins_mx>;
-//	pinctrl-1 = <&uart8_sleep_pins_mx>;
-//	status = "disabled";
-//};
+&uart8 {
+	pinctrl-names = "default", "sleep";
+	pinctrl-0 = <&uart8_pins_mx>;
+	pinctrl-1 = <&uart8_sleep_pins_mx>;
+	status = "okay";
+};
 
 /*rs485*/
 &uart5 {
@@ -465,33 +475,32 @@
 };
 
 
+/* Bluetooth */
+&uart7 {
+	pinctrl-names = "default", "sleep", "idle";
+	pinctrl-0 = <&uart7_pins_myir>;
+	pinctrl-1 = <&uart7_sleep_pins_myir>;
+	pinctrl-2 = <&uart7_idle_pins_myir>;
+	uart-has-rtscts;
+	status = "okay";
 
-&usart1 {
-		pinctrl-names = "default", "sleep", "idle";
-		pinctrl-0 = <&usart1_pins_myir>;
-		pinctrl-1 = <&usart1_sleep_pins_myir>;
-		pinctrl-2 = <&usart1_idle_pins_myir>;
-		uart-has-rtscts;
-		status = "okay";
+	bluetooth {
+		pinctrl-names = "default";
+		pinctrl-0 = <&btreg0>;
+		compatible = "brcm,bcm43438-bt";
+		max-speed = <3000000>;
+	};
 
-		bluetooth {
-			pinctrl-names = "default";
-			pinctrl-0 = <&btreg0>;
-//		shutdown-gpios = <&gpioe 1 GPIO_ACTIVE_HIGH>;
-			compatible = "brcm,bcm43438-bt";
-			max-speed = <3000000>;
-		};
 };
 
-
 /*SPI1 for A7 core*/
-/*&spi1 {
+/*
+&spi1 {
 	pinctrl-names = "default", "sleep";
         pinctrl-0 = <&spi1_pins_a>;
         pinctrl-1 = <&spi1_sleep_pins_a>;
 	    cs-gpios = <&gpioz 3 0>;
-        status = "disabled";
-		//status = "okay";
+        status = "okay";
 	spidev@0 {     
        		 compatible = "spidev";
         	spi-max-frequency = <20000000>;
@@ -502,14 +511,14 @@
 */
 
 /*SPI1 for M4 core*/
-/*
+
 &m4_spi1 {
    pinctrl-names = "rproc_default";
    pinctrl-0 = <&m4_spi1_pins_z_mx>;
    status = "okay";
 
 };
-*/
+
 
 &sram {
 	dma_pool: dma_pool@0 {
@@ -600,6 +609,7 @@
 	};
 };
 
+
 /*usb host*/
 &usbh_ehci {
 	phys = <&usbphyc_port0>;
@@ -615,7 +625,6 @@
 };
 
 /*otg*/
-/*
 &usbotg_hs {
 	phys = <&usbphyc_port1 0>;
 	phy-names = "usb2-phy";
@@ -628,7 +637,7 @@
 		};
 	};
 };
-*/
+
 &usbphyc {
 	status = "okay";
 	

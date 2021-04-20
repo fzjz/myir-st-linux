@@ -103,7 +103,7 @@
 	vdd-supply = <&vdd>;
 	vdda-supply = <&vdd>;
 	vref-supply = <&vrefbuf>;
-	status = "okay";
+	status = "disabled";
 	adc1: adc@0 {
 		/*
 		 * Type-C USB_PWR_CC1 & USB_PWR_CC2 on in18 & in19.
@@ -508,7 +508,6 @@
 	wakeup-source;
 	status = "okay";
 };
-
 
 &pwr_regulators {
 	vdd-supply = <&vdd>;
