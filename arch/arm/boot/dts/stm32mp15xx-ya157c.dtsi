@@ -465,6 +465,7 @@
 };
 
 
+
 &usart1 {
 		pinctrl-names = "default", "sleep", "idle";
 		pinctrl-0 = <&usart1_pins_myir>;
