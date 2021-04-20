@@ -1291,6 +1291,7 @@
 				 <&scmi0_clk CK_SCMI0_LSI>;
 		};
 
+
 		pwr_regulators: pwr@50001000 {
 			compatible = "st,stm32mp1,pwr-reg";
 			reg = <0x50001000 0x10>;
@@ -1307,6 +1308,7 @@
 				regulator-min-microvolt = <1800000>;
 				regulator-max-microvolt = <1800000>;
 			};
+
 
 			usb33: usb33 {
 				regulator-name = "usb33";
