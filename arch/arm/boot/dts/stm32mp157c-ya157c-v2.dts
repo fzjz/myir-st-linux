@@ -18,15 +18,15 @@
 
 	aliases {
 		ethernet0 = &ethernet0;
-		serial0 = &uart4;
-		//serial2 = &uart8;//rs232
+		//serial0 = &uart4;
+		serial2 = &uart8;//debug
 		serial3 = &uart5;//rs485
 		//serial4 = &uart7;//bt
 		serial4 = &usart1;//bt
 	};
 
 	chosen {
-		stdout-path = "serial0:115200n8";
+		stdout-path = "serial2:115200n8";
 	};
 
 	reserved-memory {
