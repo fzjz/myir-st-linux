@@ -254,8 +254,8 @@
               compatible ="edt,edt-ft5x06";
               reg = <0x38>;
 
-              interrupts = <1 IRQ_TYPE_EDGE_FALLING>;
-              interrupt-parent = <&gpioe>;
+              interrupts = <13 IRQ_TYPE_EDGE_FALLING>;
+              interrupt-parent = <&gpiob>;
               interrupt-controller;
               touchscreen-size-x = <800>;
               touchscreen-size-y = <480>;

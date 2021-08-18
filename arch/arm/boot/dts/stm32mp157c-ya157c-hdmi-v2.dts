@@ -30,7 +30,8 @@
 	hdmi-transmitter@39 {
 		compatible = "sil,sii9022";
 		reg = <0x39>;
-		reset-gpios = <&gpioc 7 GPIO_ACTIVE_LOW>;
+		//reset-gpios = <&gpioc 7 GPIO_ACTIVE_LOW>;
+		reset-gpios = <&gpiog 8 GPIO_ACTIVE_LOW>;
 		interrupts = <10 IRQ_TYPE_EDGE_FALLING>;
 		interrupt-parent = <&gpioa>;
 		#sound-dai-cells = <0>;
